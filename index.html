@@ -1,0 +1,848 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CARGA — Registro de Fuerza</title>
+<meta name="theme-color" content="#0A0C0E">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="CARGA">
+<link rel="manifest" href="data:application/manifest+json;base64,eyJuYW1lIjogIkNBUkdBIFx1MjAxNCBSZWdpc3RybyBkZSBGdWVyemEiLCAic2hvcnRfbmFtZSI6ICJDQVJHQSIsICJkZXNjcmlwdGlvbiI6ICJSZWdpc3RybyBkZSBwZXNvcyBwb3IgZWplcmNpY2lvIHkgZFx1MDBlZGEiLCAic3RhcnRfdXJsIjogIi4iLCAiZGlzcGxheSI6ICJzdGFuZGFsb25lIiwgImJhY2tncm91bmRfY29sb3IiOiAiIzBBMEMwRSIsICJ0aGVtZV9jb2xvciI6ICIjMEEwQzBFIiwgIm9yaWVudGF0aW9uIjogInBvcnRyYWl0IiwgImljb25zIjogW3sic3JjIjogImRhdGE6aW1hZ2UvcG5nO2Jhc2U2NCxpVkJPUncwS0dnb0FBQUFOU1VoRVVnQUFBTUFBQUFEQUNBWUFBQUJTM0d3SEFBQUM4MGxFUVZSNG5PM2R3VkViUVJCQVVlSHlDVkZFNFV4OGR5Z09obEM0a3dscGNNWVIyQlpDN1Bic2YrK3FQY3hPNjllZ0FyUjM5dytQN3llSStyYjNBbUJQQWlCTkFLUUpnRFFCa0NZQTBnUkFtZ0JJRXdCcEFpQk5BS1FKZ0RRQmtDWUEwZ1JBbWdCSUV3QnBBaUJOQUtRSmdEUUJrQ1lBMGdSQW1nQklFd0JwQWlCTkFLUUpnRFFCa0NZQTBnUkFtZ0JJRXdCcEFpQk5BS1FKZ0RRQmtDWUEwZ1JBbWdCSUV3QnBBaUJOQUtRSmdEUUJrQ1lBMGdSQW1nQklFd0JwQWlCTkFLUjkzM3NCbDNyNytlUGlhODh2cjErNGtyYWp6V0dKRStBam0zN045VnptaUhNWUg4QzFtN2pDNXEva3FITVlIY0JuTjIvNjVxL2l5SE1ZSFFCOE5RR1FKZ0RTQkVDYUFFZ1RBR2tDSUUwQXBBbUFOQUdRSmdEU0JFRGFMdjhQOFBiNzExOWZPejg5YjdnUzlqQnAvcHVmQVArNitVdGVaMjNUNXI5cEFKZmVuQWlPYWVMOGZRWWdUUUNrQ1lBMEFaQW1BTklFUUpvQVNCTUFhUUlnVFFDa0NZQTBBWkFtQU5JRVFKb0FTQk1BYVFJZ1RRQ2tDWUMwWlo0U2VhM0pqK2RoZjA0QTBnUkEydGdBL09oeUxGUG5PVFlBMklJQVNCTUFhUUlnVFFDa0NZQzBzUUdjWDE3M1hnSTNOSFdlWXdPQUxRaUF0TVAvTWR6VW8zY2xVMytMZXd0T0FOSUVRSm9BU0JNQWFRSWdUUUNrQ1lBMEFaQW1BTklFUUpvQVNCTUFhUUlnVFFDa0NZQTBBWkFtQU5JRVFKb0FTTnMwZ1BQVDgwMnZZeTBUNTcvNUNmQy9tL1BtUDdacDg5L2xXeUc4eWRzbXpkOW5BTklFUUpvQVNCTUFhUUlnVFFDa0NZQTBBWkFtQU5JRVFKb0FTQk1BYWFNRCtPempqVHdlNlRhT1BJZlJBWnhPMTIvZTVFMWYwVkhuTUQ2QTArbmptemg5MDFkMXhEbmMzVDg4dnUrOUNOakxFaWNBZkJVQmtDWUEwZ1JBbWdCSUV3QnBBaUJOQUtRSmdEUUJrQ1lBMGdSQW1nQklFd0JwQWlCTkFLUUpnRFFCa0NZQTBnUkFtZ0JJRXdCcEFpQk5BS1FKZ0RRQmtDWUEwZ1JBbWdCSUV3QnBBaUJOQUtRSmdEUUJrQ1lBMGdSQW1nQklFd0JwQWlCTkFLUUpnRFFCa0NZQTBnUkFtZ0JJRXdCcEFpQk5BS1FKZ0RRQmtQWUgwZ0JZeVVGejlZVUFBQUFBU1VWT1JLNUNZSUk9IiwgInNpemVzIjogIjE5MngxOTIiLCAidHlwZSI6ICJpbWFnZS9wbmciLCAicHVycG9zZSI6ICJhbnkgbWFza2FibGUifSwgeyJzcmMiOiAiZGF0YTppbWFnZS9wbmc7YmFzZTY0LGlWQk9SdzBLR2dvQUFBQU5TVWhFVWdBQUFnQUFBQUlBQ0FZQUFBRDBlTlQ2QUFBS0VFbEVRVlI0bk8zYXpVMGNheEJBVWJCbUJZZ295SVM5UTNFd0RzVjdNaUdOV2ZNVzFwTWxZL05uWnJxK3Z1ZnNhV3JSVmJwcXplWFZ6ZTNUQlFDUThtWHJBUUNBOHhNQUFCQWtBQUFnU0FBQVFKQUFBSUFnQVFBQVFRSUFBSUlFQUFBRUNRQUFDQklBQUJBa0FBQWdTQUFBUUpBQUFJQWdBUUFBUVFJQUFJSUVBQUFFQ1FBQUNCSUFBQkFrQUFBZ1NBQUFRSkFBQUlBZ0FRQUFRUUlBQUlJRUFBQUVDUUFBQ0JJQUFCQWtBQUFnU0FBQVFKQUFBSUFnQVFBQVFRSUFBSUlFQUFBRUNRQUFDQklBQUJBa0FBQWdTQUFBUUpBQUFJQWdBUUFBUVFJQUFJSUVBQUFFQ1FBQUNCSUFBQkFrQUFBZ1NBQUFRSkFBQUlBZ0FRQUFRUUlBQUlJRUFBQUVDUUFBQ0JJQUFCQWtBQUFnU0FBQVFKQUFBSUFnQVFBQVFRSUFBSUlFQUFBRUNRQUFDQklBQUJBa0FBQWdTQUFBUUpBQUFJQWdBUUFBUVFJQUFJSUVBQUFFQ1FBQUNCSUFBQkFrQUFBZ1NBQUFRSkFBQUlBZ0FRQUFRUUlBQUlJRUFBQUVDUUFBQ0JJQUFCQWtBQUFnU0FBQVFKQUFBSUFnQVFBQVFRSUFBSUlFQUFBRUNRQUFDQklBQUJBa0FBQWdTQUFBUUpBQUFJQWdBUUFBUVFJQUFJSUVBQUFFQ1FBQUNCSUFBQkFrQUFBZ1NBQUFRSkFBQUlBZ0FRQUFRUUlBQUlJRUFBQUVDUUFBQ0JJQUFCQWtBQUFnU0FBQVFKQUFBSUFnQVFBQVFRSUFBSUlFQUFBRUNRQUFDQklBQUJBa0FBQWdTQUFBUUpBQUFJQWdBUUFBUVFJQUFJSUVBQUFFQ1FBQUNCSUFBQkFrQUFBZ1NBQUFRSkFBQUlBZ0FRQUFRUUlBQUlJRUFBQUVDUUFBQ0JJQUFCQWtBQUFnU0FBQVFKQUFBSUFnQVFBQVFRSUFBSUlFQUFBRUNRQUFDQklBQUJBa0FBQWdTQUFBUUpBQUFJQWdBUUFBUVFJQUFJSUVBQUFFQ1FBQUNCSUFBQkIwMkhvQS9zM3gvdTVrejc1K2VEelpzNEh6Y1NmNGs4dXJtOXVucllmZ2ZVNjV6SDlqeVdFdDdnU3ZFUUFMMldLaGYyZkJZVFozZ3JmeUc0QkZURmpxaTRzNWN3RFBUZG5QS1hQd01nR3dnR25MTkcwZVlONWVUcHVINXdUQWNGT1hhT3BjVURSMUg2Zk94VThDWUxEcHl6TjlQaWlZdm9mVDV5c1RBRU90c2pTcnpBbDd0TXIrclRKbmpRQUFnQ0FCTU5CcXRiemF2TEFIcSszZGF2TVdDQUFBQ0JJQUFCQWtBSVpaOVRQWnFuUERpbGJkdDFYbjNpc0JBQUJCQWdBQWdnUUFBQVFKQUFBSUVnQUFFQ1FBQUNCSUFBQkFrQUFBZ0NBQkFBQkJBZ0FBZ2dRQUFBUUpBQUFJRWdBQUVDUUFBQ0JJQUFCQWtBQUFnQ0FCQUFCQkFnQUFnZ1FBQUFRSkFBQUlFZ0FBRUNRQUFDQklBQUJBa0FBQWdDQUJBQUJCQWdBQWdnUUFBQVFKQUFBSU9tdzl3S3FPMzc1KytHK3Z2Ly80eEVrQTlzRmRQUzhCOEU3LzhvTCsvZ3d2TElDN3VoVUI4RWFmOFlMKzdabGVXS0RJWGQyVzN3Qzh3U2xlMG5NK0gyQWFkM1Y3QWdBQWdnVEFLODVWa1dvVnFIQlhaeEFBQUJBa0FGNXc3bnBVcThEZXVhdHpDQUFBQ0JJQUFCQWtBQUFnU0FBQVFKQUFBSUFnQVFBQVFRSUFBSUlFQUFBRUNRQUFDQklBQUJBa0FBQWdTQUFBUUpBQUFJQWdBUUFBUVFJQUFJSUVBQUFFQ1FBQUNCSUFBQkFrQUFBZ1NBQUFRSkFBQUlBZ0FRQUFRUUlBQUlJRUFBQUVDUUFBQ0JJQUFCQWtBQUFnU0FBQVFKQUFBSUFnQVFBQVFRSUFBSUlFQUFBRUNRQUFDQklBQUJBa0FBQWdTQUFBUUpBQUFJQWdBUUFBUVFJQUFJSUVBQUFFQ1FBQUNCSUFBQkFrQUFBZ1NBQUFRSkFBQUlBZ0FRQUFRUUlBQUlJRUFBQUVDUUFBQ0JJQUFCQWtBQUFnNkxEMUFPekg4ZjV1NnhFQWVDTmZBQUFnU0FBQVFKQUFBSUFnQVFBQVFRSUFBSUlFQUFBRUNRQUFDQklBQUJBa0FBQWdTQUFBUUpBQUFJQWdBUUFBUVFJQUFJSUVBQUFFQ1FBQUNCSUFBQkFrQUFBZ1NBQUFRSkFBQUlBZ0FRQUFRUUlBQUlJRUFBQUVDUUFBQ0JJQUFCQWtBQUFnU0FBQVFKQUFBSUFnQVFBQVFRSUFBSUlFQUFBRUNRQUFDQklBQUJBa0FBQWdTQUFBUU5CaDZ3SFlqK3VIeDYxSGdJVGovZDNXSTdBRHZnQUFRSkFBQUlBZ0FRQUFRUUlBQUlJRUFBQUVDUUFBQ0JJQUFCQWtBQUFnU0FBQVFKQUFBSUFnQVFBQVFRSUFBSUlFQUFBRUNRQUFDQklBQUJBa0FBQWdTQUFBUUpBQUFJQWdBUUFBUVFJQUFJSUVBQUFFQ1FBQUNCSUFBQkFrQUFBZ1NBQUFRSkFBQUlBZ0FRQUFRUUlBQUlJRUFBQUVDUUFBQ0JJQUFCQWtBQUFnU0FBQVFKQUFBSUFnQVFBQVFRSUFBSUlFQUFBRUNRQUFDQklBQUJBa0FBQWdTQUFBUUpBQUFJQWdBUUFBUVFJQUFJSUVBQUFFQ1FBQUNCSUFBQkFrQUFBZ1NBQUFRSkFBQUlBZ0FRQUFRUUxnQmRmZmYrejYvd0djbTdzNmh3QUFnQ0FCOElwejFhTktCU3JjMVJrRUFBQUVDWUEzT0hWRnFsU2d4bDNkM21IckFWYngvOHQwL1BiMTA1OEpVT1N1YmtzQXZOTm52TEJlVUlCZjNOVnRDSUFQOHJJQmZDNTM5Yno4QmdBQWdnUUFBQVFKQUFBSUVnQUFFQ1FBQUNCSUFBQkFrQUFBZ0NBQkFBQkJBZ0FBZ2dRQUFBUUpBQUFJRWdBQUVDUUFBQ0JJQUFCQWtBQUFnQ0FCQUFCQkFnQUFnZ1FBQUFRSkFBQUlFZ0FBRUNRQUFDQklBQUJBa0FBQWdDQUJBQUJCQWdBQWdnUUFBQVFKQUFBSUVnQUFFQ1FBaHJsK2VOeDZoQTlaZFc1WTBhcjd0dXJjZXlVQUFDQklBQUJBa0FBWWFMWFBaS3ZOQzN1dzJ0NnRObStCQUFDQUlBRXcxQ3Exdk1xY3NFZXI3TjhxYzlZSWdNR21MODMwK2FCZytoNU9uNjlNQUF3M2RYbW16Z1ZGVS9keDZsejhKQUFXTUcySnBzMER6TnZMYWZQd25BQll4SlJsbWpJSDhOeVUvWnd5QnkrN3ZMcTVmZHA2Q043bmVIOTM5djlwb1dFdDdnU3ZFUUNMTytXU1cyYllCM2VDUHhFQUFCRGtOd0FBRUNRQUFDQklBQUJBa0FBQWdDQUJBQUJCQWdBQWdnUUFBQVFKQUFBSUVnQUFFQ1FBQUNCSUFBQkFrQUFBZ0NBQkFBQkJBZ0FBZ2dRQUFBUUpBQUFJRWdBQUVDUUFBQ0JJQUFCQWtBQUFnQ0FCQUFCQkFnQUFnZ1FBQUFRSkFBQUlFZ0FBRUNRQUFDQklBQUJBa0FBQWdDQUJBQUJCQWdBQWdnUUFBQVFKQUFBSUVnQUFFQ1FBQUNCSUFBQkFrQUFBZ0NBQkFBQkJBZ0FBZ2dRQUFBUUpBQUFJRWdBQUVDUUFBQ0JJQUFCQWtBQUFnQ0FCQUFCQkFnQUFnZ1FBQUFRSkFBQUlFZ0FBRUNRQUFDQklBQUJBa0FBQWdDQUJBQUJCQWdBQWdnUUFBQVFKQUFBSUVnQUFFQ1FBQUNCSUFBQkFrQUFBZ0NBQkFBQkJBZ0FBZ2dRQUFBUUpBQUFJRWdBQUVDUUFBQ0JJQUFCQWtBQUFnQ0FCQUFCQkFnQUFnZ1FBQUFRSkFBQUlFZ0FBRUNRQUFDQklBQUJBa0FBQWdDQUJBQUJCQWdBQWdnUUFBQVFKQUFBSUVnQUFFQ1FBQUNCSUFBQkFrQUFBZ0NBQkFBQkJBZ0FBZ2dRQUFBUUpBQUFJRWdBQUVDUUFBQ0JJQUFCQWtBQUFnQ0FCQUFCQkFnQUFnZ1FBQUFRSkFBQUlFZ0FBRUNRQUFDQklBQUJBa0FBQWdDQUJBQUJCQWdBQWdnUUFBQVFKQUFBSUVnQUFFQ1FBQUNCSUFBQkFrQUFBZ0NBQkFBQkJBZ0FBZ2dRQUFBUUpBQUFJRWdBQUVDUUFBQ0JJQUFCQWtBQUFnQ0FCQUFCQkFnQUFnZ1FBQUFRSkFBQUlFZ0FBRUNRQUFDQklBQUJBa0FBQWdDQUJBQUJCQWdBQWdnUUFBQVFKQUFBSUVnQUFFQ1FBQUNCSUFBQkFrQUFBZ0NBQkFBQkJBZ0FBZ2dRQUFBUUpBQUFJRWdBQUVQUWZTN1hSMlZHazArMEFBQUFBU1VWT1JLNUNZSUk9IiwgInNpemVzIjogIjUxMng1MTIiLCAidHlwZSI6ICJpbWFnZS9wbmciLCAicHVycG9zZSI6ICJhbnkgbWFza2FibGUifV19">
+<link rel="apple-touch-icon" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAALQAAAC0CAYAAAA9zQYyAAACv0lEQVR4nO3dTU7bUBSAUVN1RBCr6E6YsxQWw1KYsxO2kTEdVxV/NnWuv54zihRLse/79BQpTnJ1fXP7ukDEj0ufAHwnQZMiaFIETYqgSRE0KYImRdCkCJoUQZMiaFIETYqgSRE0KYImRdCkCJoUQZMiaFIETYqgSRE0KYImRdCkCJoUQZMiaFIETYqgSRE0KYImRdCkCJoUQZMiaFIETYqgSRE0KYImRdCkCJoUQZMiaFIETYqgSRE0KYImRdCk/Lz0CbznfPfr08eenl/+4Zn8HwrzHrtDf2W4a47nT5V5jwx67bCmDnm60rzHBb11SBOHPFlt3uOChi0ETYqgSRE0KYImRdCkCJoUQZMiaFIETcpFgj4/3C/nh/u/HnNsE9Z196DfukhRH9uUdd016I8uTtTHNGldvYcmRdCkCJoUQZMiaFIETYqgSRE0KYImRdCkCJoUQZMiaFIETYqgSRE0KYImRdCkjP5LirWm/WYx+7FDkyJoUgRNiqBJETQpgiZF0KQImhRBkyJoUgRNiqBJSd6cdHp+ufQpHEbtRi47NCmCJkXQpAiaFEGTImhSBE2KoEkRNCmCJkXQpAiaFEGTImhSBE2KoEkRNCmCJmXXoE+PT5ueZ6ZJ67r7Dv3WxYn52Kas69X1ze3rrq/4ge/40qYvyX5ebd7eQ5MiaFIETYqgSRE0KYImRdCkCJoUQZMiaFLGBb31Y9RJH8MeQW3e44JelvVDmjbcoyjNe2TQy/L1YU0c7pFU5j3ubjvYYuwODWsImhRBkyJoUgRNiqBJETQpgiZF0KQImhRBkyJoUgRNiqBJETQpgiZF0KQImhRBkyJoUgRNiqBJETQpgiZF0KQImhRBkyJoUgRNiqBJETQpgiZF0KQImhRBkyJoUgRNiqBJETQpgiZF0KQImhRBkyJoUgRNiqBJETQpvwGtdF655DXJtQAAAABJRU5ErkJggg==">
+<link rel="icon" type="image/png" sizes="192x192" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMAAAADACAYAAABS3GwHAAAC80lEQVR4nO3dwVEbQRBAUeHyCVFE4Ux8dygOhlC4kwlpcMYR2BZC7Pbsf++qPcxO69egArR39w+P7yeI+rb3AmBPAiBNAKQJgDQBkCYA0gRAmgBIEwBpAiBNAKQJgDQBkCYA0gRAmgBIEwBpAiBNAKQJgDQBkCYA0gRAmgBIEwBpAiBNAKQJgDQBkCYA0gRAmgBIEwBpAiBNAKQJgDQBkCYA0gRAmgBIEwBpAiBNAKQJgDQBkCYA0gRAmgBIEwBpAiBNAKR933sBl3r7+ePia88vr1+4krajzWGJE+Ajm37N9VzmiHMYH8C1m7jC5q/kqHMYHcBnN2/65q/iyHMYHQB8NQGQJgDSBECaAEgTAGkCIE0ApAmANAGQJgDSBEDaLv8P8Pb7119fOz89b7gS9jBp/pufAP+6+UteZ23T5r9pAJfenAiOaeL8fQYgTQCkCYA0AZAmANIEQJoASBMAaQIgTQCkCYA0AZAmANIEQJoASBMAaQIgTQCkCYC0ZZ4Sea3Jj+dhf04A0gRA2tgA/OhyLFPnOTYA2IIASBMAaQIgTQCkCYC0sQGcX173XgI3NHWeYwOALQiAtMP/MdzUo3clU3+LewtOANIEQJoASBMAaQIgTQCkCYA0AZAmANIEQJoASBMAaQIgTQCkCYA0AZAmANIEQJoASNs0gPPT802vYy0T57/5CfC/m/PmP7Zp89/lWyG8ydsmzd9nANIEQJoASBMAaQIgTQCkCYA0AZAmANIEQJoASBMAaaMD+OzjjTwe6TaOPIfRAZxO12/e5E1f0VHnMD6A0+njmzh901d1xDnc3T88vu+9CNjLEicAfBUBkCYA0gRAmgBIEwBpAiBNAKQJgDQBkCYA0gRAmgBIEwBpAiBNAKQJgDQBkCYA0gRAmgBIEwBpAiBNAKQJgDQBkCYA0gRAmgBIEwBpAiBNAKQJgDQBkCYA0gRAmgBIEwBpAiBNAKQJgDQBkCYA0gRAmgBIEwBpAiBNAKQJgDQBkPYH0gBYyUFz9YUAAAAASUVORK5CYII=">
+
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap');
+
+  :root{
+    --bg:#0A0C0E;
+    --surface:#14171A;
+    --surface-2:#1C2023;
+    --surface-3:#262B2F;
+    --border:#2A2F33;
+    --text:#F4F5F6;
+    --text-dim:#8B9196;
+    --text-faint:#565C61;
+    --orange:#FF4F32;
+    --orange-dim:#5C2318;
+    --orange-soft:#FF7A5C;
+    --cyan:#3ED6E8;
+    --cyan-dim:#123638;
+    --radius:14px;
+  }
+  *{box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+  html,body{margin:0;padding:0;}
+  body{
+    background:var(--bg);
+    color:var(--text);
+    font-family:'Inter',sans-serif;
+    min-height:100vh;
+    padding-bottom:78px;
+  }
+  h1,h2,h3,.display{
+    font-family:'Bebas Neue',sans-serif;
+    letter-spacing:0.03em;
+    font-weight:400;
+    margin:0;
+  }
+  .mono, input[type=number]{
+    font-family:'JetBrains Mono',monospace;
+    font-variant-numeric:tabular-nums;
+  }
+  button{font-family:inherit;cursor:pointer;}
+  input{font-family:inherit;}
+
+  /* Header */
+  header.top{
+    padding:20px 18px 16px;
+    position:sticky;top:0;
+    background:linear-gradient(180deg,var(--bg) 70%,rgba(10,12,14,0.85));
+    z-index:10;
+  }
+  header.top h1{
+    font-size:34px;
+    color:var(--text);
+    display:flex;
+    align-items:center;
+    gap:2px;
+    line-height:1;
+  }
+  header.top h1 .accent{ color:var(--orange); }
+  header.top p{
+    margin:5px 0 0;
+    color:var(--text-faint);
+    font-size:12px;
+    letter-spacing:0.03em;
+    text-transform:uppercase;
+  }
+
+  main{max-width:640px;margin:0 auto;padding:16px;}
+
+  /* Empty states */
+  .empty{
+    border:1px dashed var(--border);
+    border-radius:var(--radius);
+    padding:32px 20px;
+    text-align:center;
+    color:var(--text-dim);
+    margin-top:10px;
+  }
+  .empty p{margin:0 0 16px;font-size:14px;line-height:1.55;}
+
+  /* Buttons */
+  .btn{
+    background:var(--orange);
+    color:#0A0C0E;
+    border:none;
+    border-radius:10px;
+    padding:12px 18px;
+    font-weight:700;
+    font-size:13px;
+    letter-spacing:0.04em;
+    text-transform:uppercase;
+    font-family:'Inter',sans-serif;
+  }
+  .btn:active{background:var(--orange-soft);}
+  .btn.secondary{
+    background:transparent;
+    color:var(--orange-soft);
+    border:1.5px solid var(--orange-dim);
+  }
+  .btn.ghost{
+    background:transparent;
+    color:var(--text-dim);
+    border:1.5px solid var(--border);
+    text-transform:none;
+    font-weight:600;
+  }
+  .btn.danger{
+    background:transparent;
+    color:#FF7A6B;
+    border:1.5px solid #4A2018;
+    text-transform:none;
+    padding:7px 11px;
+    font-size:12px;
+    font-weight:600;
+    border-radius:8px;
+  }
+  .btn:disabled{opacity:0.4;}
+  .btn.small{padding:8px 14px;font-size:12px;border-radius:8px;}
+  .btn.full{width:100%;}
+
+  input.field{
+    background:var(--surface-2);
+    border:1.5px solid var(--border);
+    color:var(--text);
+    border-radius:10px;
+    padding:11px 12px;
+    font-size:14px;
+    width:100%;
+    font-weight:500;
+  }
+  input.field:focus{outline:none;border-color:var(--orange-dim);}
+  input.field::placeholder{color:var(--text-faint);}
+
+  /* Day chips */
+  .day-chips{
+    display:flex;gap:8px;overflow-x:auto;padding-bottom:4px;margin-bottom:18px;
+    scrollbar-width:none;
+  }
+  .day-chips::-webkit-scrollbar{display:none;}
+  .day-chip{
+    flex:0 0 auto;
+    background:var(--surface);
+    border:1.5px solid var(--border);
+    color:var(--text-dim);
+    border-radius:22px;
+    padding:9px 18px;
+    font-size:13px;
+    font-weight:600;
+    white-space:nowrap;
+  }
+  .day-chip.active{
+    background:var(--orange);
+    border-color:var(--orange);
+    color:#0A0C0E;
+  }
+
+  /* Exercise card */
+  .ex-card{
+    background:var(--surface);
+    border:1px solid var(--border);
+    border-radius:var(--radius);
+    padding:18px;
+    margin-bottom:14px;
+  }
+  .ex-card .ex-head{
+    display:flex;justify-content:space-between;align-items:center;
+    gap:12px;
+    margin-bottom:14px;
+  }
+  .ex-card h3{
+    font-size:22px;color:var(--text);letter-spacing:0.02em;
+    text-transform:uppercase;
+  }
+  .ex-last{font-size:11.5px;color:var(--text-faint);margin-top:4px;letter-spacing:0.01em;}
+  .ex-last .mono{color:var(--text-dim);}
+
+  .pr-tag{
+    font-family:'Bebas Neue',sans-serif;
+    font-size:12px;
+    letter-spacing:0.06em;
+    background:var(--cyan);
+    color:#062326;
+    padding:4px 9px;
+    border-radius:6px;
+    white-space:nowrap;
+    box-shadow:0 0 14px rgba(62,214,232,0.45);
+  }
+
+  /* Ring + card body layout */
+  .ex-body{ display:flex; gap:16px; align-items:center; margin-bottom:14px; }
+  .ring-wrap{ position:relative; flex:0 0 auto; width:84px;height:84px; }
+  .ring-wrap svg{ transform:rotate(-90deg); }
+  .ring-track{ fill:none; stroke:var(--surface-3); stroke-width:8; }
+  .ring-fill{ fill:none; stroke:var(--orange); stroke-width:8; stroke-linecap:round; transition:stroke-dashoffset .4s ease; }
+  .ring-fill.maxed{ stroke:var(--cyan); }
+  .ring-center{
+    position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;
+  }
+  .ring-center .num{ font-family:'JetBrains Mono',monospace; font-size:17px; font-weight:700; color:var(--text); }
+  .ring-center .unit{ font-size:9px; color:var(--text-faint); letter-spacing:0.05em; margin-top:-2px; }
+
+  .ex-stats{ flex:1; display:flex; flex-direction:column; gap:6px; }
+  .ex-stats .stat-line{ display:flex; justify-content:space-between; font-size:12px; }
+  .ex-stats .stat-line .k{ color:var(--text-faint); }
+  .ex-stats .stat-line .v{ font-family:'JetBrains Mono',monospace; color:var(--text-dim); }
+
+  /* Today's sets */
+  .set-chips{display:flex;flex-wrap:wrap;gap:7px;margin-bottom:14px;}
+  .set-chip{
+    background:var(--surface-2);
+    border:1px solid var(--border);
+    border-radius:8px;
+    padding:6px 9px;
+    font-size:12.5px;
+    display:flex;align-items:center;gap:7px;
+    font-weight:600;
+  }
+  .set-chip .x{
+    color:var(--text-faint);
+    font-size:13px;line-height:1;
+  }
+  .set-chip .x:active{color:var(--orange-soft);}
+
+  .add-set-row{display:flex;gap:8px;}
+  .field-wrap{position:relative;flex:1;}
+  .field-wrap .suffix{
+    position:absolute;right:11px;top:50%;transform:translateY(-50%);
+    color:var(--text-faint);font-size:10.5px;pointer-events:none;
+    text-transform:uppercase;letter-spacing:0.04em;
+  }
+
+  /* Rutina view */
+  .day-block{
+    background:var(--surface);
+    border:1px solid var(--border);
+    border-radius:var(--radius);
+    padding:16px 18px;
+    margin-bottom:14px;
+  }
+  .day-block-head{
+    display:flex;justify-content:space-between;align-items:center;
+    margin-bottom:10px;
+  }
+  .day-block-head h3{font-size:20px;text-transform:uppercase;}
+  .ex-row{
+    display:flex;justify-content:space-between;align-items:center;
+    padding:10px 0;border-top:1px solid var(--border);
+    font-size:13.5px;font-weight:500;
+  }
+  .ex-row:first-of-type{border-top:none;}
+  .add-ex-row{display:flex;gap:8px;margin-top:12px;}
+
+  /* Progreso view */
+  select.field{
+    background:var(--surface-2);
+    border:1.5px solid var(--border);
+    color:var(--text);
+    border-radius:10px;
+    padding:11px 12px;
+    font-size:14px;
+    width:100%;
+    appearance:none;
+    font-weight:600;
+  }
+  .stat-row{display:flex;gap:10px;margin:16px 0;}
+  .stat-box{
+    flex:1;background:var(--surface);border:1px solid var(--border);
+    border-radius:var(--radius);padding:14px 8px;text-align:center;
+  }
+  .stat-box .val{font-family:'JetBrains Mono',monospace;font-size:22px;font-weight:700;color:var(--orange-soft);}
+  .stat-box .lbl{font-size:10px;color:var(--text-faint);text-transform:uppercase;letter-spacing:0.06em;margin-top:4px;}
+
+  .chart-wrap{
+    background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);
+    padding:16px;margin-bottom:16px;
+  }
+  .session-row{
+    display:flex;justify-content:space-between;align-items:center;
+    padding:12px 0;border-top:1px solid var(--border);
+  }
+  .session-row:first-of-type{border-top:none;}
+  .session-date{font-size:11.5px;color:var(--text-faint);text-transform:uppercase;letter-spacing:0.03em;}
+  .session-sets{font-size:12.5px;color:var(--text-dim);font-weight:500;}
+  .session-max{font-family:'JetBrains Mono',monospace;color:var(--orange-soft);font-size:14px;font-weight:700;}
+
+  /* Bottom nav */
+  nav.bottom{
+    position:fixed;bottom:0;left:0;right:0;
+    background:rgba(20,23,26,0.92);
+    backdrop-filter:blur(10px);
+    border-top:1px solid var(--border);
+    display:flex;
+    z-index:10;
+  }
+  nav.bottom button{
+    flex:1;background:none;border:none;padding:13px 4px 11px;
+    display:flex;flex-direction:column;align-items:center;gap:5px;
+    color:var(--text-faint);
+  }
+  nav.bottom button .dot{
+    width:5px;height:5px;border-radius:50%;background:transparent;
+  }
+  nav.bottom button.active{color:var(--text);}
+  nav.bottom button.active .dot{background:var(--orange);box-shadow:0 0 8px rgba(255,79,50,0.7);}
+  nav.bottom button span.lbl{
+    font-family:'Bebas Neue',sans-serif;font-size:13px;letter-spacing:0.06em;
+  }
+
+  .section-title{
+    font-size:11px;color:var(--text-faint);text-transform:uppercase;letter-spacing:0.1em;
+    margin:4px 0 12px;font-weight:600;
+  }
+
+  .modal-backdrop{
+    position:fixed;inset:0;background:rgba(0,0,0,0.6);
+    display:flex;align-items:flex-end;justify-content:center;z-index:50;
+  }
+  .modal{
+    background:var(--surface);border:1px solid var(--border);
+    border-radius:18px 18px 0 0;padding:22px;width:100%;max-width:640px;
+  }
+  .modal h3{font-size:20px;margin-bottom:14px;text-transform:uppercase;}
+  .modal .row{display:flex;gap:8px;margin-top:12px;}
+
+  .loading{padding:60px 20px;text-align:center;color:var(--text-faint);font-size:13px;}
+</style>
+</head>
+<body>
+
+<header class="top">
+  <h1>CAR<span class="accent">GA</span></h1>
+  <p>Registro de fuerza · peso por ejercicio y día</p>
+</header>
+
+<main id="app">
+  <div class="loading">Cargando…</div>
+</main>
+
+<nav class="bottom">
+  <button data-tab="hoy"><span class="dot"></span><span class="lbl">Hoy</span></button>
+  <button data-tab="rutina"><span class="dot"></span><span class="lbl">Rutina</span></button>
+  <button data-tab="progreso"><span class="dot"></span><span class="lbl">Progreso</span></button>
+</nav>
+
+<div id="modal-root"></div>
+
+<script>
+// ---------- State ----------
+let state = {
+  days: [],
+  exercises: [],
+  logs: [],
+  activeTab: 'hoy',
+  activeDayId: null,
+  activeExerciseId: null,
+  loading: true
+};
+
+function uid(){ return 'id_' + Date.now().toString(36) + '_' + Math.random().toString(36).slice(2,8); }
+function todayISO(){ const d=new Date(); return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0'); }
+function escapeHtml(s){ return String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
+function fmtDate(iso){
+  const [y,m,d] = iso.split('-');
+  const meses=['ENE','FEB','MAR','ABR','MAY','JUN','JUL','AGO','SEP','OCT','NOV','DIC'];
+  return d + ' ' + meses[parseInt(m,10)-1];
+}
+
+// ---------- Storage ----------
+// Usa window.storage cuando está disponible (dentro de Claude), y localStorage
+// como almacenamiento real en el dispositivo cuando la app se aloja de forma independiente.
+const hasClaudeStorage = () => typeof window.storage !== 'undefined' && window.storage !== null;
+
+async function loadData(){
+  try{
+    let raw = null;
+    if(hasClaudeStorage()){
+      const res = await window.storage.get('gym-data', false);
+      raw = res && res.value;
+    }else{
+      raw = localStorage.getItem('gym-data');
+    }
+    if(raw){
+      const parsed = JSON.parse(raw);
+      state.days = parsed.days || [];
+      state.exercises = parsed.exercises || [];
+      state.logs = parsed.logs || [];
+    }
+  }catch(e){
+    // no data yet, first use
+  }
+  if(state.days.length && !state.activeDayId) state.activeDayId = state.days[0].id;
+  state.loading = false;
+  render();
+}
+
+let saveTimeout = null;
+function saveData(){
+  clearTimeout(saveTimeout);
+  saveTimeout = setTimeout(async () => {
+    const payload = JSON.stringify({ days: state.days, exercises: state.exercises, logs: state.logs });
+    try{
+      if(hasClaudeStorage()){
+        await window.storage.set('gym-data', payload, false);
+      }else{
+        localStorage.setItem('gym-data', payload);
+      }
+    }catch(e){
+      console.error('Error guardando datos', e);
+    }
+  }, 150);
+}
+
+// ---------- Derived helpers ----------
+function exercisesForDay(dayId){
+  return state.exercises.filter(e => e.dayId === dayId);
+}
+function logsForExercise(exerciseId){
+  return state.logs.filter(l => l.exerciseId === exerciseId).sort((a,b)=> a.date < b.date ? -1 : 1);
+}
+function todayLogForExercise(exerciseId){
+  return state.logs.find(l => l.exerciseId === exerciseId && l.date === todayISO());
+}
+function maxWeightInSets(sets){
+  if(!sets.length) return 0;
+  return Math.max(...sets.map(s=>s.weight));
+}
+function allTimePR(exerciseId, excludeToday){
+  const logs = logsForExercise(exerciseId).filter(l => !excludeToday || l.date !== todayISO());
+  let pr = 0;
+  logs.forEach(l => { const m = maxWeightInSets(l.sets); if(m>pr) pr=m; });
+  return pr;
+}
+function lastSessionBeforeToday(exerciseId){
+  const logs = logsForExercise(exerciseId).filter(l => l.date !== todayISO());
+  return logs.length ? logs[logs.length-1] : null;
+}
+
+// ---------- Rendering ----------
+function render(){
+  const app = document.getElementById('app');
+  document.querySelectorAll('nav.bottom button').forEach(b=>{
+    b.classList.toggle('active', b.dataset.tab === state.activeTab);
+  });
+
+  if(state.loading){
+    app.innerHTML = '<div class="loading">Cargando…</div>';
+    return;
+  }
+
+  if(state.activeTab === 'hoy') app.innerHTML = renderHoy();
+  else if(state.activeTab === 'rutina') app.innerHTML = renderRutina();
+  else app.innerHTML = renderProgreso();
+
+  attachViewListeners();
+}
+
+function renderHoy(){
+  if(!state.days.length){
+    return `<div class="empty">
+      <p>Todavía no tienes días de entrenamiento.<br>Crea el primero en la pestaña Rutina para empezar a registrar tus pesos.</p>
+      <button class="btn" data-goto="rutina">Ir a Rutina</button>
+    </div>`;
+  }
+
+  const chips = state.days.map(d => `
+    <button class="day-chip ${d.id===state.activeDayId?'active':''}" data-select-day="${d.id}">${escapeHtml(d.name)}</button>
+  `).join('');
+
+  const dayExercises = state.activeDayId ? exercisesForDay(state.activeDayId) : [];
+
+  let body;
+  if(!dayExercises.length){
+    body = `<div class="empty">
+      <p>Este día todavía no tiene ejercicios.<br>Añádelos desde la pestaña Rutina.</p>
+      <button class="btn" data-goto="rutina">Ir a Rutina</button>
+    </div>`;
+  }else{
+    body = dayExercises.map(ex => renderExerciseCard(ex)).join('');
+  }
+
+  return `<div class="day-chips">${chips}</div>${body}`;
+}
+
+function renderRing(pct, maxed, label, unit){
+  const r = 34, c = 2*Math.PI*r;
+  const offset = c - (Math.min(100,pct)/100)*c;
+  return `<div class="ring-wrap">
+    <svg width="84" height="84" viewBox="0 0 84 84">
+      <circle class="ring-track" cx="42" cy="42" r="${r}"></circle>
+      <circle class="ring-fill ${maxed?'maxed':''}" cx="42" cy="42" r="${r}" stroke-dasharray="${c.toFixed(1)}" stroke-dashoffset="${offset.toFixed(1)}"></circle>
+    </svg>
+    <div class="ring-center"><span class="num">${label}</span><span class="unit">${unit}</span></div>
+  </div>`;
+}
+
+function renderExerciseCard(ex){
+  const todayLog = todayLogForExercise(ex.id);
+  const todaySets = todayLog ? todayLog.sets : [];
+  const todayTop = maxWeightInSets(todaySets);
+  const last = lastSessionBeforeToday(ex.id);
+  const prBeforeToday = allTimePR(ex.id, true);
+  const brokePR = todayTop > 0 && todayTop > prBeforeToday;
+
+  const refPR = Math.max(prBeforeToday, todayTop, 1);
+  const pct = todayTop>0 ? Math.min(100, Math.round((todayTop / refPR) * 100)) : 0;
+
+  const lastText = last
+    ? `Última vez (${fmtDate(last.date)}): <span class="mono">${last.sets.map(s=>s.weight+'×'+s.reps).join(' · ')}</span>`
+    : 'Sin sesiones previas';
+
+  const setChips = todaySets.map((s,i) => `
+    <span class="set-chip"><span class="mono">${s.weight}×${s.reps}</span><span class="x" data-remove-set="${ex.id}" data-set-index="${i}">✕</span></span>
+  `).join('');
+
+  return `
+  <div class="ex-card">
+    <div class="ex-head">
+      <h3>${escapeHtml(ex.name)}</h3>
+      ${brokePR ? '<span class="pr-tag">Nuevo PR</span>' : ''}
+    </div>
+
+    <div class="ex-body">
+      ${renderRing(pct, brokePR, todayTop>0?todayTop:'—', 'kg hoy')}
+      <div class="ex-stats">
+        <div class="stat-line"><span class="k">PR previo</span><span class="v">${prBeforeToday || '—'} kg</span></div>
+        <div class="stat-line"><span class="k">Sesiones</span><span class="v">${logsForExercise(ex.id).length}</span></div>
+        <div class="ex-last" style="margin-top:4px;">${lastText}</div>
+      </div>
+    </div>
+
+    ${setChips ? `<div class="set-chips">${setChips}</div>` : ''}
+
+    <div class="add-set-row">
+      <div class="field-wrap">
+        <input class="field mono" type="number" inputmode="decimal" placeholder="Peso" id="w-${ex.id}"><span class="suffix">kg</span>
+      </div>
+      <div class="field-wrap">
+        <input class="field mono" type="number" inputmode="numeric" placeholder="Reps" id="r-${ex.id}"><span class="suffix">reps</span>
+      </div>
+      <button class="btn small" data-add-set="${ex.id}">+</button>
+    </div>
+  </div>`;
+}
+
+function renderRutina(){
+  const dayBlocks = state.days.map(d => {
+    const exs = exercisesForDay(d.id);
+    const rows = exs.length
+      ? exs.map(e => `<div class="ex-row"><span>${escapeHtml(e.name)}</span><button class="btn danger" data-del-exercise="${e.id}">Eliminar</button></div>`).join('')
+      : `<div class="ex-row" style="color:var(--text-faint)">Sin ejercicios todavía</div>`;
+
+    return `<div class="day-block">
+      <div class="day-block-head">
+        <h3>${escapeHtml(d.name)}</h3>
+        <button class="btn danger" data-del-day="${d.id}">Eliminar día</button>
+      </div>
+      ${rows}
+      <div class="add-ex-row">
+        <input class="field" placeholder="Nuevo ejercicio" id="new-ex-${d.id}">
+        <button class="btn secondary small" data-add-exercise="${d.id}">Añadir</button>
+      </div>
+    </div>`;
+  }).join('');
+
+  return `
+    <div class="section-title">Tus días de entrenamiento</div>
+    ${dayBlocks || '<div class="empty"><p>Todavía no has creado ningún día.</p></div>'}
+    <div class="add-set-row" style="margin-top:6px;">
+      <input class="field" placeholder="Nombre del día (ej. Empuje, Pierna...)" id="new-day-name">
+      <button class="btn" data-add-day="1">Crear día</button>
+    </div>
+
+    <div class="section-title" style="margin-top:28px;">Copia de seguridad</div>
+    <div class="chart-wrap" style="margin-bottom:16px;">
+      <p style="color:var(--text-dim);font-size:12.5px;line-height:1.5;margin:0 0 14px;">
+        Tus datos se guardan solos en este dispositivo. Puedes descargar un archivo .json como copia extra (por si cambias de móvil o borras el navegador), o restaurar uno previamente descargado.
+      </p>
+      <div class="row" style="display:flex;gap:8px;">
+        <button class="btn secondary full" id="export-json-btn">Exportar JSON</button>
+        <button class="btn ghost full" id="import-json-btn">Importar JSON</button>
+      </div>
+      <input type="file" accept="application/json" id="import-json-input" style="display:none;">
+      <div id="backup-msg" style="font-size:12px;color:var(--cyan);margin-top:10px;display:none;"></div>
+    </div>
+  `;
+}
+
+function renderProgreso(){
+  if(!state.exercises.length){
+    return `<div class="empty"><p>Todavía no tienes ejercicios registrados.<br>Créalos desde la pestaña Rutina.</p><button class="btn" data-goto="rutina">Ir a Rutina</button></div>`;
+  }
+
+  const options = state.exercises.map(e => `<option value="${e.id}" ${e.id===state.activeExerciseId?'selected':''}>${escapeHtml(e.name)}</option>`).join('');
+
+  if(!state.activeExerciseId) state.activeExerciseId = state.exercises[0].id;
+  const exId = state.activeExerciseId;
+  const logs = logsForExercise(exId);
+  const pr = allTimePR(exId, false);
+
+  let statBox = `
+    <div class="stat-row">
+      <div class="stat-box"><div class="val">${pr || '—'}</div><div class="lbl">PR (kg)</div></div>
+      <div class="stat-box"><div class="val">${logs.length}</div><div class="lbl">Sesiones</div></div>
+      <div class="stat-box"><div class="val">${logs.length ? fmtDate(logs[logs.length-1].date) : '—'}</div><div class="lbl">Última</div></div>
+    </div>`;
+
+  let chart = '';
+  if(logs.length >= 2){
+    chart = `<div class="chart-wrap">${buildSvgChart(logs)}</div>`;
+  }
+
+  const rows = [...logs].reverse().map(l => {
+    const max = maxWeightInSets(l.sets);
+    return `<div class="session-row">
+      <span class="session-date">${fmtDate(l.date)}</span>
+      <span class="session-sets mono">${l.sets.map(s=>s.weight+'×'+s.reps).join(' · ')}</span>
+      <span class="session-max">${max}kg</span>
+    </div>`;
+  }).join('');
+
+  return `
+    <select class="field" id="exercise-select">${options}</select>
+    ${statBox}
+    ${chart}
+    ${logs.length ? `<div class="chart-wrap">${rows}</div>` : '<div class="empty"><p>Sin sesiones registradas para este ejercicio todavía.</p></div>'}
+  `;
+}
+
+function buildSvgChart(logs){
+  const w = 580, h = 140, pad = 20;
+  const points = logs.map(l => maxWeightInSets(l.sets));
+  const min = Math.min(...points), max = Math.max(...points);
+  const range = (max - min) || 1;
+  const stepX = (w - pad*2) / (points.length - 1 || 1);
+
+  const coords = points.map((v,i) => {
+    const x = pad + i*stepX;
+    const y = h - pad - ((v - min) / range) * (h - pad*2);
+    return [x,y];
+  });
+
+  const path = coords.map((c,i) => (i===0?'M':'L') + c[0].toFixed(1) + ',' + c[1].toFixed(1)).join(' ');
+  const dots = coords.map((c,i) => `<circle cx="${c[0].toFixed(1)}" cy="${c[1].toFixed(1)}" r="${i===coords.length-1?4.5:2.5}" fill="${i===coords.length-1?'#3ED6E8':'#FF4F32'}" />`).join('');
+
+  return `<svg viewBox="0 0 ${w} ${h}" width="100%" height="${h}" preserveAspectRatio="none">
+    <path d="${path}" fill="none" stroke="#FF4F32" stroke-width="2.5" />
+    ${dots}
+  </svg>`;
+}
+
+// ---------- Backup: export / import JSON ----------
+function exportJSON(){
+  const payload = { days: state.days, exercises: state.exercises, logs: state.logs, exportedAt: new Date().toISOString() };
+  const blob = new Blob([JSON.stringify(payload, null, 2)], { type: 'application/json' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  const d = new Date();
+  const stamp = d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');
+  a.href = url;
+  a.download = `carga-backup-${stamp}.json`;
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  setTimeout(()=>URL.revokeObjectURL(url), 1000);
+  showBackupMsg('Copia descargada a tu móvil.');
+}
+
+function showBackupMsg(text){
+  const el = document.getElementById('backup-msg');
+  if(!el) return;
+  el.textContent = text;
+  el.style.display = 'block';
+}
+
+function handleImportFile(file){
+  const reader = new FileReader();
+  reader.onload = () => {
+    let parsed;
+    try{
+      parsed = JSON.parse(reader.result);
+    }catch(e){
+      showBackupMsg('El archivo no es un JSON válido.');
+      return;
+    }
+    if(!parsed || !Array.isArray(parsed.days) || !Array.isArray(parsed.exercises) || !Array.isArray(parsed.logs)){
+      showBackupMsg('El archivo no tiene el formato esperado.');
+      return;
+    }
+    confirmModal('Esto sustituirá todos tus datos actuales por los del archivo importado.', () => {
+      state.days = parsed.days;
+      state.exercises = parsed.exercises;
+      state.logs = parsed.logs;
+      state.activeDayId = state.days[0]?.id || null;
+      state.activeExerciseId = null;
+      saveData();
+      render();
+      showBackupMsg('Datos importados correctamente.');
+    });
+  };
+  reader.readAsText(file);
+}
+
+// ---------- Modal ----------
+function closeModal(){ document.getElementById('modal-root').innerHTML = ''; }
+function confirmModal(text, onConfirm){
+  document.getElementById('modal-root').innerHTML = `
+    <div class="modal-backdrop" id="modal-backdrop">
+      <div class="modal">
+        <h3>Confirmar</h3>
+        <p style="color:var(--text-dim);font-size:13.5px;margin:0 0 6px;">${escapeHtml(text)}</p>
+        <div class="row">
+          <button class="btn ghost full" id="modal-cancel">Cancelar</button>
+          <button class="btn full" style="background:#FF4F32;color:#0A0C0E" id="modal-confirm">Eliminar</button>
+        </div>
+      </div>
+    </div>`;
+  document.getElementById('modal-cancel').onclick = closeModal;
+  document.getElementById('modal-backdrop').onclick = (e) => { if(e.target.id==='modal-backdrop') closeModal(); };
+  document.getElementById('modal-confirm').onclick = () => { onConfirm(); closeModal(); };
+}
+
+// ---------- Event handling ----------
+function attachViewListeners(){
+  const app = document.getElementById('app');
+
+  app.querySelectorAll('[data-goto]').forEach(el => el.onclick = () => { state.activeTab = el.dataset.goto; render(); });
+
+  app.querySelectorAll('[data-select-day]').forEach(el => el.onclick = () => {
+    state.activeDayId = el.dataset.selectDay; render();
+  });
+
+  app.querySelectorAll('[data-add-set]').forEach(el => el.onclick = () => {
+    const exId = el.dataset.addSet;
+    const wInput = document.getElementById('w-'+exId);
+    const rInput = document.getElementById('r-'+exId);
+    const weight = parseFloat(wInput.value);
+    const reps = parseInt(rInput.value, 10);
+    if(!weight || weight<=0 || !reps || reps<=0) return;
+    let log = todayLogForExercise(exId);
+    if(!log){
+      log = { id: uid(), exerciseId: exId, date: todayISO(), sets: [] };
+      state.logs.push(log);
+    }
+    log.sets.push({ weight, reps });
+    wInput.value=''; rInput.value='';
+    saveData(); render();
+  });
+
+  app.querySelectorAll('[data-remove-set]').forEach(el => el.onclick = () => {
+    const exId = el.dataset.removeSet;
+    const idx = parseInt(el.dataset.setIndex, 10);
+    const log = todayLogForExercise(exId);
+    if(!log) return;
+    log.sets.splice(idx,1);
+    if(log.sets.length===0){
+      state.logs = state.logs.filter(l => l.id !== log.id);
+    }
+    saveData(); render();
+  });
+
+  app.querySelectorAll('[data-add-day]').forEach(el => el.onclick = () => {
+    const input = document.getElementById('new-day-name');
+    const name = input.value.trim();
+    if(!name) return;
+    const day = { id: uid(), name };
+    state.days.push(day);
+    if(!state.activeDayId) state.activeDayId = day.id;
+    input.value='';
+    saveData(); render();
+  });
+
+  app.querySelectorAll('[data-del-day]').forEach(el => el.onclick = () => {
+    const dayId = el.dataset.delDay;
+    const day = state.days.find(d=>d.id===dayId);
+    confirmModal(`Eliminar "${day.name}" y todos sus ejercicios y registros asociados.`, () => {
+      const exIds = state.exercises.filter(e=>e.dayId===dayId).map(e=>e.id);
+      state.exercises = state.exercises.filter(e=>e.dayId!==dayId);
+      state.logs = state.logs.filter(l=>!exIds.includes(l.exerciseId));
+      state.days = state.days.filter(d=>d.id!==dayId);
+      if(state.activeDayId===dayId) state.activeDayId = state.days[0]?.id || null;
+      saveData(); render();
+    });
+  });
+
+  app.querySelectorAll('[data-add-exercise]').forEach(el => el.onclick = () => {
+    const dayId = el.dataset.addExercise;
+    const input = document.getElementById('new-ex-'+dayId);
+    const name = input.value.trim();
+    if(!name) return;
+    state.exercises.push({ id: uid(), name, dayId });
+    input.value='';
+    saveData(); render();
+  });
+
+  app.querySelectorAll('[data-del-exercise]').forEach(el => el.onclick = () => {
+    const exId = el.dataset.delExercise;
+    const ex = state.exercises.find(e=>e.id===exId);
+    confirmModal(`Eliminar "${ex.name}" y todo su historial de registros.`, () => {
+      state.exercises = state.exercises.filter(e=>e.id!==exId);
+      state.logs = state.logs.filter(l=>l.exerciseId!==exId);
+      if(state.activeExerciseId===exId) state.activeExerciseId = null;
+      saveData(); render();
+    });
+  });
+
+  const exSelect = document.getElementById('exercise-select');
+  if(exSelect){
+    exSelect.onchange = () => { state.activeExerciseId = exSelect.value; render(); };
+  }
+
+  const exportBtn = document.getElementById('export-json-btn');
+  if(exportBtn) exportBtn.onclick = exportJSON;
+
+  const importBtn = document.getElementById('import-json-btn');
+  const importInput = document.getElementById('import-json-input');
+  if(importBtn && importInput){
+    importBtn.onclick = () => importInput.click();
+    importInput.onchange = () => {
+      if(importInput.files && importInput.files[0]) handleImportFile(importInput.files[0]);
+      importInput.value = '';
+    };
+  }
+}
+
+document.querySelectorAll('nav.bottom button').forEach(btn => {
+  btn.addEventListener('click', () => {
+    state.activeTab = btn.dataset.tab;
+    render();
+  });
+});
+
+loadData();
+</script>
+</body>
+</html>
