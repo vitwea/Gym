@@ -167,6 +167,29 @@
     color:#0A0C0E;
   }
 
+  .date-bar{
+    display:flex;align-items:center;gap:10px;
+    margin-bottom:16px;
+    padding:10px 12px;
+    background:var(--surface);
+    border:1px solid var(--border);
+    border-radius:10px;
+  }
+  .date-input{
+    background:var(--surface-2);
+    border:1px solid var(--border);
+    color:var(--text);
+    border-radius:8px;
+    padding:6px 8px;
+    font-size:12.5px;
+    font-family:'JetBrains Mono',monospace;
+    color-scheme:dark;
+  }
+  .date-label{
+    font-size:12.5px;color:var(--text-dim);font-weight:600;flex:1;
+  }
+  .date-label.past{ color:var(--cyan); }
+
   /* Exercise card */
   .ex-card{
     background:var(--surface);
@@ -366,6 +389,7 @@ let state = {
   activeTab: 'hoy',
   activeDayId: null,
   activeExerciseId: null,
+  selectedDate: null,
   loading: true
 };
 
@@ -376,6 +400,11 @@ function fmtDate(iso){
   const [y,m,d] = iso.split('-');
   const meses=['ENE','FEB','MAR','ABR','MAY','JUN','JUL','AGO','SEP','OCT','NOV','DIC'];
   return d + ' ' + meses[parseInt(m,10)-1];
+}
+function fmtDateLong(iso){
+  const [y,m,d] = iso.split('-');
+  const meses=['enero','febrero','marzo','abril','mayo','junio','julio','agosto','septiembre','octubre','noviembre','diciembre'];
+  return `${parseInt(d,10)} de ${meses[parseInt(m,10)-1]}`;
 }
 
 // ---------- Storage ----------
@@ -402,6 +431,7 @@ async function loadData(){
     // no data yet, first use
   }
   if(state.days.length && !state.activeDayId) state.activeDayId = state.days[0].id;
+  state.selectedDate = todayISO();
   state.loading = false;
   render();
 }
@@ -430,21 +460,21 @@ function exercisesForDay(dayId){
 function logsForExercise(exerciseId){
   return state.logs.filter(l => l.exerciseId === exerciseId).sort((a,b)=> a.date < b.date ? -1 : 1);
 }
-function todayLogForExercise(exerciseId){
-  return state.logs.find(l => l.exerciseId === exerciseId && l.date === todayISO());
+function selectedLogForExercise(exerciseId){
+  return state.logs.find(l => l.exerciseId === exerciseId && l.date === state.selectedDate);
 }
 function maxWeightInSets(sets){
   if(!sets.length) return 0;
   return Math.max(...sets.map(s=>s.weight));
 }
-function allTimePR(exerciseId, excludeToday){
-  const logs = logsForExercise(exerciseId).filter(l => !excludeToday || l.date !== todayISO());
+function allTimePR(exerciseId, excludeDate){
+  const logs = logsForExercise(exerciseId).filter(l => !excludeDate || l.date !== excludeDate);
   let pr = 0;
   logs.forEach(l => { const m = maxWeightInSets(l.sets); if(m>pr) pr=m; });
   return pr;
 }
-function lastSessionBeforeToday(exerciseId){
-  const logs = logsForExercise(exerciseId).filter(l => l.date !== todayISO());
+function lastSessionBefore(exerciseId, date){
+  const logs = logsForExercise(exerciseId).filter(l => l.date < date);
   return logs.length ? logs[logs.length-1] : null;
 }
 
@@ -479,6 +509,14 @@ function renderHoy(){
     <button class="day-chip ${d.id===state.activeDayId?'active':''}" data-select-day="${d.id}">${escapeHtml(d.name)}</button>
   `).join('');
 
+  const isToday = state.selectedDate === todayISO();
+  const dateBar = `
+    <div class="date-bar">
+      <input type="date" class="date-input" id="session-date" value="${state.selectedDate}" max="${todayISO()}">
+      <span class="date-label ${isToday?'':'past'}">${isToday ? 'Hoy · ' + fmtDateLong(state.selectedDate) : 'Editando · ' + fmtDateLong(state.selectedDate)}</span>
+      ${isToday ? '' : '<button class="btn ghost small" id="back-to-today">Hoy</button>'}
+    </div>`;
+
   const dayExercises = state.activeDayId ? exercisesForDay(state.activeDayId) : [];
 
   let body;
@@ -491,7 +529,7 @@ function renderHoy(){
     body = dayExercises.map(ex => renderExerciseCard(ex)).join('');
   }
 
-  return `<div class="day-chips">${chips}</div>${body}`;
+  return `<div class="day-chips">${chips}</div>${dateBar}${body}`;
 }
 
 function renderRing(pct, maxed, label, unit){
@@ -507,21 +545,22 @@ function renderRing(pct, maxed, label, unit){
 }
 
 function renderExerciseCard(ex){
-  const todayLog = todayLogForExercise(ex.id);
-  const todaySets = todayLog ? todayLog.sets : [];
-  const todayTop = maxWeightInSets(todaySets);
-  const last = lastSessionBeforeToday(ex.id);
-  const prBeforeToday = allTimePR(ex.id, true);
-  const brokePR = todayTop > 0 && todayTop > prBeforeToday;
+  const isToday = state.selectedDate === todayISO();
+  const selLog = selectedLogForExercise(ex.id);
+  const selSets = selLog ? selLog.sets : [];
+  const selTop = maxWeightInSets(selSets);
+  const last = lastSessionBefore(ex.id, state.selectedDate);
+  const prBeforeSel = allTimePR(ex.id, state.selectedDate);
+  const brokePR = selTop > 0 && selTop > prBeforeSel;
 
-  const refPR = Math.max(prBeforeToday, todayTop, 1);
-  const pct = todayTop>0 ? Math.min(100, Math.round((todayTop / refPR) * 100)) : 0;
+  const refPR = Math.max(prBeforeSel, selTop, 1);
+  const pct = selTop>0 ? Math.min(100, Math.round((selTop / refPR) * 100)) : 0;
 
   const lastText = last
     ? `Última vez (${fmtDate(last.date)}): <span class="mono">${last.sets.map(s=>s.weight+'×'+s.reps).join(' · ')}</span>`
     : 'Sin sesiones previas';
 
-  const setChips = todaySets.map((s,i) => `
+  const setChips = selSets.map((s,i) => `
     <span class="set-chip"><span class="mono">${s.weight}×${s.reps}</span><span class="x" data-remove-set="${ex.id}" data-set-index="${i}">✕</span></span>
   `).join('');
 
@@ -533,9 +572,9 @@ function renderExerciseCard(ex){
     </div>
 
     <div class="ex-body">
-      ${renderRing(pct, brokePR, todayTop>0?todayTop:'—', 'kg hoy')}
+      ${renderRing(pct, brokePR, selTop>0?selTop:'—', isToday ? 'kg hoy' : 'kg')}
       <div class="ex-stats">
-        <div class="stat-line"><span class="k">PR previo</span><span class="v">${prBeforeToday || '—'} kg</span></div>
+        <div class="stat-line"><span class="k">PR previo</span><span class="v">${prBeforeSel || '—'} kg</span></div>
         <div class="stat-line"><span class="k">Sesiones</span><span class="v">${logsForExercise(ex.id).length}</span></div>
         <div class="ex-last" style="margin-top:4px;">${lastText}</div>
       </div>
@@ -749,9 +788,9 @@ function attachViewListeners(){
     const weight = parseFloat(wInput.value);
     const reps = parseInt(rInput.value, 10);
     if(!weight || weight<=0 || !reps || reps<=0) return;
-    let log = todayLogForExercise(exId);
+    let log = selectedLogForExercise(exId);
     if(!log){
-      log = { id: uid(), exerciseId: exId, date: todayISO(), sets: [] };
+      log = { id: uid(), exerciseId: exId, date: state.selectedDate, sets: [] };
       state.logs.push(log);
     }
     log.sets.push({ weight, reps });
@@ -762,7 +801,7 @@ function attachViewListeners(){
   app.querySelectorAll('[data-remove-set]').forEach(el => el.onclick = () => {
     const exId = el.dataset.removeSet;
     const idx = parseInt(el.dataset.setIndex, 10);
-    const log = todayLogForExercise(exId);
+    const log = selectedLogForExercise(exId);
     if(!log) return;
     log.sets.splice(idx,1);
     if(log.sets.length===0){
@@ -770,6 +809,18 @@ function attachViewListeners(){
     }
     saveData(); render();
   });
+
+  const dateInput = document.getElementById('session-date');
+  if(dateInput){
+    dateInput.onchange = () => {
+      if(dateInput.value) state.selectedDate = dateInput.value;
+      render();
+    };
+  }
+  const backToToday = document.getElementById('back-to-today');
+  if(backToToday){
+    backToToday.onclick = () => { state.selectedDate = todayISO(); render(); };
+  }
 
   app.querySelectorAll('[data-add-day]').forEach(el => el.onclick = () => {
     const input = document.getElementById('new-day-name');
