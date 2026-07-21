@@ -310,6 +310,13 @@
     background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);
     padding:16px;margin-bottom:16px;
   }
+  .chart-title{
+    font-size:12px;font-weight:600;color:var(--text-dim);margin-bottom:10px;
+    text-transform:uppercase;letter-spacing:0.04em;
+  }
+  .chart-title .chart-sub{
+    text-transform:none;font-weight:400;color:var(--text-faint);letter-spacing:0;
+  }
   .session-row{
     display:flex;justify-content:space-between;align-items:center;
     padding:12px 0;border-top:1px solid var(--border);
@@ -656,9 +663,17 @@ function renderProgreso(){
       <div class="stat-box"><div class="val">${logs.length ? fmtDate(logs[logs.length-1].date) : '—'}</div><div class="lbl">Última</div></div>
     </div>`;
 
-  let chart = '';
+  let charts = '';
   if(logs.length >= 2){
-    chart = `<div class="chart-wrap">${buildSvgChart(logs)}</div>`;
+    charts = `
+      <div class="chart-wrap">
+        <div class="chart-title">Peso máximo por sesión</div>
+        ${buildLineChart(logs)}
+      </div>
+      <div class="chart-wrap">
+        <div class="chart-title">Volumen total por sesión <span class="chart-sub">(peso × reps sumado)</span></div>
+        ${buildVolumeChart(logs)}
+      </div>`;
   }
 
   const rows = [...logs].reverse().map(l => {
@@ -673,30 +688,103 @@ function renderProgreso(){
   return `
     <select class="field" id="exercise-select">${options}</select>
     ${statBox}
-    ${chart}
+    ${charts}
     ${logs.length ? `<div class="chart-wrap">${rows}</div>` : '<div class="empty"><p>Sin sesiones registradas para este ejercicio todavía.</p></div>'}
   `;
 }
 
-function buildSvgChart(logs){
-  const w = 580, h = 140, pad = 20;
+function buildLineChart(logs){
+  const w = 580, h = 190, padL = 34, padR = 14, padT = 16, padB = 26;
   const points = logs.map(l => maxWeightInSets(l.sets));
   const min = Math.min(...points), max = Math.max(...points);
   const range = (max - min) || 1;
-  const stepX = (w - pad*2) / (points.length - 1 || 1);
+  const plotW = w - padL - padR, plotH = h - padT - padB;
+  const stepX = plotW / (points.length - 1 || 1);
+  const prVal = Math.max(...points);
 
   const coords = points.map((v,i) => {
-    const x = pad + i*stepX;
-    const y = h - pad - ((v - min) / range) * (h - pad*2);
+    const x = padL + i*stepX;
+    const y = padT + plotH - ((v - min) / range) * plotH;
     return [x,y];
   });
 
-  const path = coords.map((c,i) => (i===0?'M':'L') + c[0].toFixed(1) + ',' + c[1].toFixed(1)).join(' ');
-  const dots = coords.map((c,i) => `<circle cx="${c[0].toFixed(1)}" cy="${c[1].toFixed(1)}" r="${i===coords.length-1?4.5:2.5}" fill="${i===coords.length-1?'#3ED6E8':'#FF4F32'}" />`).join('');
+  const gridCount = 3;
+  const gridLines = [];
+  const gridLabels = [];
+  for(let g=0; g<=gridCount; g++){
+    const val = min + (range * g / gridCount);
+    const y = padT + plotH - (g/gridCount)*plotH;
+    gridLines.push(`<line x1="${padL}" y1="${y.toFixed(1)}" x2="${w-padR}" y2="${y.toFixed(1)}" stroke="#2A2F33" stroke-width="1" />`);
+    gridLabels.push(`<text x="${padL-6}" y="${(y+3).toFixed(1)}" text-anchor="end" font-size="9" fill="#565C61" font-family="JetBrains Mono, monospace">${Math.round(val)}</text>`);
+  }
 
-  return `<svg viewBox="0 0 ${w} ${h}" width="100%" height="${h}" preserveAspectRatio="none">
-    <path d="${path}" fill="none" stroke="#FF4F32" stroke-width="2.5" />
+  const path = coords.map((c,i) => (i===0?'M':'L') + c[0].toFixed(1) + ',' + c[1].toFixed(1)).join(' ');
+  const areaPath = path + ` L${coords[coords.length-1][0].toFixed(1)},${(padT+plotH).toFixed(1)} L${coords[0][0].toFixed(1)},${(padT+plotH).toFixed(1)} Z`;
+
+  const dots = coords.map((c,i) => {
+    const isPR = points[i] === prVal;
+    return `<circle cx="${c[0].toFixed(1)}" cy="${c[1].toFixed(1)}" r="${isPR?4.5:2.5}" fill="${isPR?'#3ED6E8':'#FF4F32'}" />`;
+  }).join('');
+
+  // sparse date labels: first, middle, last
+  const labelIdxs = points.length <= 4 ? points.map((_,i)=>i) : [0, Math.floor((points.length-1)/2), points.length-1];
+  const dateLabels = labelIdxs.map(i => `<text x="${coords[i][0].toFixed(1)}" y="${h-8}" text-anchor="middle" font-size="9" fill="#565C61" font-family="Inter, sans-serif">${fmtDate(logs[i].date)}</text>`).join('');
+
+  return `<svg viewBox="0 0 ${w} ${h}" width="100%" height="${h}">
+    <defs>
+      <linearGradient id="fillGrad" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%" stop-color="#FF4F32" stop-opacity="0.28" />
+        <stop offset="100%" stop-color="#FF4F32" stop-opacity="0" />
+      </linearGradient>
+    </defs>
+    ${gridLines.join('')}
+    ${gridLabels.join('')}
+    <path d="${areaPath}" fill="url(#fillGrad)" stroke="none" />
+    <path d="${path}" fill="none" stroke="#FF4F32" stroke-width="2.5" stroke-linejoin="round" />
     ${dots}
+    ${dateLabels}
+  </svg>`;
+}
+
+function buildVolumeChart(logs){
+  const w = 580, h = 170, padL = 34, padR = 14, padT = 16, padB = 26;
+  const volumes = logs.map(l => l.sets.reduce((sum,s)=> sum + s.weight*s.reps, 0));
+  const maxV = Math.max(...volumes) || 1;
+  const plotW = w - padL - padR, plotH = h - padT - padB;
+  const n = volumes.length;
+  const slot = plotW / n;
+  const barW = Math.min(28, slot*0.55);
+  const topVolume = Math.max(...volumes);
+
+  const gridCount = 3;
+  const gridLines = [];
+  const gridLabels = [];
+  for(let g=0; g<=gridCount; g++){
+    const val = (maxV * g / gridCount);
+    const y = padT + plotH - (g/gridCount)*plotH;
+    gridLines.push(`<line x1="${padL}" y1="${y.toFixed(1)}" x2="${w-padR}" y2="${y.toFixed(1)}" stroke="#2A2F33" stroke-width="1" />`);
+    gridLabels.push(`<text x="${padL-6}" y="${(y+3).toFixed(1)}" text-anchor="end" font-size="9" fill="#565C61" font-family="JetBrains Mono, monospace">${Math.round(val)}</text>`);
+  }
+
+  const bars = volumes.map((v,i) => {
+    const x = padL + i*slot + (slot-barW)/2;
+    const barH = (v/maxV) * plotH;
+    const y = padT + plotH - barH;
+    const isTop = v === topVolume;
+    return `<rect x="${x.toFixed(1)}" y="${y.toFixed(1)}" width="${barW.toFixed(1)}" height="${barH.toFixed(1)}" rx="3" fill="${isTop?'#3ED6E8':'#FF4F32'}" />`;
+  }).join('');
+
+  const labelIdxs = n <= 4 ? volumes.map((_,i)=>i) : [0, Math.floor((n-1)/2), n-1];
+  const dateLabels = labelIdxs.map(i => {
+    const x = padL + i*slot + slot/2;
+    return `<text x="${x.toFixed(1)}" y="${h-8}" text-anchor="middle" font-size="9" fill="#565C61" font-family="Inter, sans-serif">${fmtDate(logs[i].date)}</text>`;
+  }).join('');
+
+  return `<svg viewBox="0 0 ${w} ${h}" width="100%" height="${h}">
+    ${gridLines.join('')}
+    ${gridLabels.join('')}
+    ${bars}
+    ${dateLabels}
   </svg>`;
 }
 
